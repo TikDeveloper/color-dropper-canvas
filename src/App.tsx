@@ -1,5 +1,13 @@
-import './App.css';
+import ColorDropper from '@/components/color-dropper/ColorDropper';
+import { GlobalStyles } from '@/styles/globalStyles';
 
 export default function App() {
-  return <div className="App">asdasd</div>;
+  return (
+    <>
+      <GlobalStyles />
+      <div className="app">
+        <ColorDropper />
+      </div>
+    </>
+  );
 }

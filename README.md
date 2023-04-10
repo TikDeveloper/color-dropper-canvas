@@ -13,3 +13,7 @@ This setup includes:
 - [eslint-plugin-prettier](https://github.com/prettier/eslint-plugin-prettier)
 - [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react)
 - [eslint-plugin-react-hooks](https://github.com/facebook/react/blob/main/packages/eslint-plugin-react-hooks/README.md)
+
+Used Modules:
+
+- [styled-components](https://styled-components.com/)
