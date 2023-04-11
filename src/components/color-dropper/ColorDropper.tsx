@@ -1,7 +1,12 @@
+import { useRef } from 'react';
 import { ColorDropperWrapper } from './ColorDropper.styled';
-import { useDropper, CIRCLE_RADIUS } from './useDropper';
+import { useDropper, CIRCLE_RADIUS, usePickMode } from '@/hooks';
+import Skeleton from '@/components/skeleton/Skeleton';
 
 const ColorDropper = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { isPicking, togglePickMode } = usePickMode(containerRef);
+
   const {
     canvasRef,
     onCanvasClick,
@@ -11,19 +16,31 @@ const ColorDropper = () => {
     pickedColor,
     colorsMatrix,
     centerColor,
-  } = useDropper();
+    isLoading,
+  } = useDropper({ isPicking });
 
   return (
-    <ColorDropperWrapper className="dropper">
+    <ColorDropperWrapper
+      className="dropper"
+      isPicking={isPicking}
+      ref={containerRef}
+    >
+      {isLoading && <Skeleton />}
+
       <div className="dropper-details">
-        <img src="/static/ColorPicker.svg" alt="Picker" />
+        <button
+          type="button"
+          className="dropper-details-pick-icon"
+          onClick={togglePickMode}
+        >
+          <img src="/static/ColorPicker.svg" alt="Picker" />
+        </button>
         <div className="dropper-details-color">
           {pickedColor && <h3>Picked Color: {pickedColor}</h3>}
-          <div
-            style={{ backgroundColor: pickedColor, width: 50, height: 50 }}
-          />
+          <div style={{ backgroundColor: pickedColor }} />
         </div>
       </div>
+
       <div className="dropper-view">
         <canvas
           ref={canvasRef}
@@ -37,7 +54,7 @@ const ColorDropper = () => {
         {colorsMatrix.length ? (
           <div
             className="dropper-view-zoom"
-            style={{ left: cord.x - 80, top: cord.y - 80 }}
+            style={{ left: cord.x, top: cord.y }}
           >
             <div className="dropper-view-zoom-container">
               <img src="/static/Circle.svg" alt="Cirlce" />
